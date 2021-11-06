@@ -5,7 +5,7 @@ using System;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
-namespace ListenOptionsExtensions
+namespace TlsCertificateLoader
 {
     public static class TlsCertificateLoader
     {
