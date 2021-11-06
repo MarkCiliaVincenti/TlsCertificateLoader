@@ -6,6 +6,8 @@
 		<Authors>Mark Cilia Vincenti</Authors>
 		<Copyright>© 2021 Mark Cilia Vincenti</Copyright>
 		<IsPackable>true</IsPackable>
+		<PackageProjectUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader</PackageProjectUrl>
+		<Description>Allows loading of TLS certificates for .NET 6.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
