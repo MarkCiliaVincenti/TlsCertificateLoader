@@ -6,16 +6,18 @@
 		<RepositoryUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader.git</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader</PackageProjectUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<Version>1.0.0</Version>
-		<PackageReleaseNotes>First release</PackageReleaseNotes>
+		<Version>1.0.1</Version>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageReleaseNotes>Added icon and credits.</PackageReleaseNotes>
 		<Description>Allows loading of TLS certificates for .NET 6.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3.</Description>
 		<Copyright>© 2021 Mark Cilia Vincenti</Copyright>
-		<PackageTags>TLS,SSL,Kestrel,HTTP3,HTTP/3,certificates,security</PackageTags>
+		<PackageTags>HTTPS,TLS,SSL,Kestrel,HTTP3,HTTP/3,certificates,security</PackageTags>
 		<RepositoryType>git</RepositoryType>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<FileVersion>1.0.0.0</FileVersion>
-		<IsPackable>true</IsPackable>		
+		<AssemblyVersion>1.0.1.0</AssemblyVersion>
+		<FileVersion>1.0.1.0</FileVersion>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -28,7 +30,11 @@
 			<PackagePath></PackagePath>
 		</None>
 		<None Include="..\README.md">
-			<Pack>False</Pack>
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\logo.png">
+			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
 	</ItemGroup>
