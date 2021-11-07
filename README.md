@@ -16,7 +16,7 @@ And to refresh (eg either on a Timer or watching a directory via PhysicalFilePro
 TlsCertificateLoader.TlsCertificateLoader.RefreshX509Certificate2Collection();
 ```
 
-#Credits
+## Credits
 [David Fowler](https://github.com/davidfowl) for [this idea](https://github.com/dotnet/aspnetcore/issues/21513#issuecomment-914370034).
 
 Logo made by [Freepik](https://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/).
