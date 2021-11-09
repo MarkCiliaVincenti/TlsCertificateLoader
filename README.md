@@ -14,7 +14,7 @@ options.ListenAnyIp(433, o =>
 
 And to refresh (eg either on a Timer or watching a directory via PhysicalFileProvider):
 ```c#
-tlsCertificateLoader.RefreshX509Certificate2Collection();
+tlsCertificateLoader.RefreshCertificates();
 ```
 
 ## Credits
