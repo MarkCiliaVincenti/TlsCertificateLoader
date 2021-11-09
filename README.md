@@ -3,7 +3,7 @@ Allows loading of TLS (HTTPS) certificates for .NET 6.0 Kestrel web applications
 
 To use:
 ```c#
-TlsCertificateLoader tlsCertificateLoader = new(fullChainPemFilePath, privateKeyPemFilePath);
+TlsCertificateLoader.TlsCertificateLoader tlsCertificateLoader = new(fullChainPemFilePath, privateKeyPemFilePath);
 options.ListenAnyIp(433, o =>
 {
      o.SetTlsHandshakeCallbackOptions(tlsCertificateLoader);
