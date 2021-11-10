@@ -1,7 +1,7 @@
 ﻿namespace TlsCertificateLoader
 {
-    public class Program
+    internal class Program
     {
-        public static void Main(string[] args) { }
+        internal static void Main() { }
     }
 }
