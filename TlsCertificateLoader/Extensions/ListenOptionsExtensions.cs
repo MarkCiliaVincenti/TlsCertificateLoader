@@ -22,7 +22,7 @@ namespace TlsCertificateLoader.Extensions
             {
                 OnConnection = context => new(new SslServerAuthenticationOptions
                 {
-                    ServerCertificateContext = tlsCertificateLoader.SslStreamCertificateContext
+                    ServerCertificateContext = tlsCertificateLoader.GetCertificateHolder(context.ClientHelloInfo.ServerName).SslStreamCertificateContext
                 })
             });
         }
@@ -37,7 +37,7 @@ namespace TlsCertificateLoader.Extensions
         {
             return listenOptions.UseHttps(new HttpsConnectionAdapterOptions
             {
-                ServerCertificateSelector = (context, dnsName) => tlsCertificateLoader.X509Certificate2Collection[0]
+                ServerCertificateSelector = (context, hostname) => tlsCertificateLoader.GetCertificateHolder(hostname).X509Certificate2Collection[0]
             });
         }
     }

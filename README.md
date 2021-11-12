@@ -14,7 +14,17 @@ options.ListenAnyIp(433, o =>
 
 And to refresh (eg either on a Timer or watching a directory via PhysicalFileProvider):
 ```c#
-tlsCertificateLoader.RefreshCertificates();
+tlsCertificateLoader.RefreshDefaultCertificates();
+```
+
+You may also add additional certificate collection for other hostnames (for example if you want to set up mydomain.tld as your default certificate and www.mydomain.tld as your alternate one):
+```c#
+tlsCertificateLoader.AddAdditionalCertificates("www.mydomain.tld", fullChainWwwPemFilePath, privateKeyWwwPemFilePath);
+```
+
+And to refresh additional certificate collections (eg either on a Timer or watching a directory via PhysicalFileProvider):
+```c#
+tlsCertificateLoader.RefreshAdditionalCertificates("www.mydomain.tld");
 ```
 
 ## Credits
