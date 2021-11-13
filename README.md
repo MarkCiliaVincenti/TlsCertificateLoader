@@ -27,7 +27,7 @@ And to refresh additional certificate collections (eg either on a Timer or watch
 tlsCertificateLoader.RefreshAdditionalCertificates("www.mydomain.tld");
 ```
 
-A [sample project using Certbot](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/Samples/CertbotSample) is available.
+A [sample project using Certbot](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample) is available.
 
 ## Credits
 [David Fowler](https://github.com/davidfowl) for [this idea](https://github.com/dotnet/aspnetcore/issues/21513#issuecomment-914370034).
