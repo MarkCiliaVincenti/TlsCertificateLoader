@@ -8,6 +8,7 @@ namespace TlsCertificateLoader.Models
     internal class CertificateHolder
     {
         internal X509Certificate2Collection X509Certificate2Collection { get; private set; }
+        internal X509Certificate2 X509Certificate2 { get; private set; }
         internal SslStreamCertificateContext SslStreamCertificateContext { get; set; }
         internal string FullChainPemFilePath { get; set; }
         internal string PrivateKeyPemFilePath { get; set; }
@@ -26,7 +27,8 @@ namespace TlsCertificateLoader.Models
         internal void RefreshCertificates()
         {
             X509Certificate2Collection = X509Certificate2Collection.ImportFullChainFromPemFiles(FullChainPemFilePath, PrivateKeyPemFilePath);
-            SslStreamCertificateContext = SslStreamCertificateContext.Create(X509Certificate2Collection[0], X509Certificate2Collection, offline: true);
+            X509Certificate2 = X509Certificate2Collection[0];
+            SslStreamCertificateContext = SslStreamCertificateContext.Create(X509Certificate2, X509Certificate2Collection, offline: true);
         }
     }
 }

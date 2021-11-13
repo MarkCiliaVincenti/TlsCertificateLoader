@@ -6,9 +6,9 @@
 		<RepositoryUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader.git</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader</PackageProjectUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<Version>1.1.0</Version>
+		<Version>1.1.1</Version>
 		<PackageIcon>logo.png</PackageIcon>
-		<PackageReleaseNotes>Added the ability to add additional certificate collections for different hostnames.</PackageReleaseNotes>
+		<PackageReleaseNotes>Optimization and added a sample project using Certbot.</PackageReleaseNotes>
 		<Description>Allows loading of TLS (HTTPS) certificates for .NET 6.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Fully compatible with certificates obtained by Certbot.</Description>
 		<Copyright>© 2021 Mark Cilia Vincenti</Copyright>
 		<PackageTags>HTTPS,TLS,SSL,Kestrel,HTTP3,HTTP/3,certificates,security,net6,net6.0,Certbot</PackageTags>

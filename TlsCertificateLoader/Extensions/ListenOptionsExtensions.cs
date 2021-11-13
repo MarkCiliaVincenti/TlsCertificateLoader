@@ -37,7 +37,7 @@ namespace TlsCertificateLoader.Extensions
         {
             return listenOptions.UseHttps(new HttpsConnectionAdapterOptions
             {
-                ServerCertificateSelector = (context, hostname) => tlsCertificateLoader.GetCertificateHolder(hostname).X509Certificate2Collection[0]
+                ServerCertificateSelector = (context, hostname) => tlsCertificateLoader.GetCertificateHolder(hostname).X509Certificate2
             });
         }
     }

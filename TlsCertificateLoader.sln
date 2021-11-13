@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TlsCertificateLoader", "TlsCertificateLoader\TlsCertificateLoader.csproj", "{99B207FC-FF05-4B37-80C3-26D0C6A5F4ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TlsCertificateLoader", "TlsCertificateLoader\TlsCertificateLoader.csproj", "{99B207FC-FF05-4B37-80C3-26D0C6A5F4ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{954A5020-4B74-4BC0-B33D-5AC13CBC3500}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertbotSample", "TlsCertificateLoader.FullSample\CertbotSample.csproj", "{45DC11E6-911C-46D5-85B5-4DBF4016FB98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{99B207FC-FF05-4B37-80C3-26D0C6A5F4ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99B207FC-FF05-4B37-80C3-26D0C6A5F4ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99B207FC-FF05-4B37-80C3-26D0C6A5F4ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45DC11E6-911C-46D5-85B5-4DBF4016FB98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45DC11E6-911C-46D5-85B5-4DBF4016FB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45DC11E6-911C-46D5-85B5-4DBF4016FB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45DC11E6-911C-46D5-85B5-4DBF4016FB98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{45DC11E6-911C-46D5-85B5-4DBF4016FB98} = {954A5020-4B74-4BC0-B33D-5AC13CBC3500}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BAF7660-D2D0-4EC9-9766-1EABB27BB4C9}
