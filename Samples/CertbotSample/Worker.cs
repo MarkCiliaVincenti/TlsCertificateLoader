@@ -15,7 +15,7 @@ namespace CertbotSample
     {
         private const string defaultHostname = "mydomain.tld";
         private const string wwwHostname = "www.mydomain.tld";
-        private const string defaultCertbotPath = "/etc/letsencrypt";
+        private const string certbotCertificatesPath = "/etc/letsencrypt";
 
         private readonly PhysicalFileProvider _fileProvider;
         private readonly PhysicalFileProvider _fileProviderWww;
@@ -48,10 +48,10 @@ namespace CertbotSample
 
         public Worker()
         {
-            _fileProvider = new(Path.Combine(defaultCertbotPath, "archive", defaultHostname));
-            _fileProviderWww = new(Path.Combine(defaultCertbotPath, "archive", wwwHostname));
-            var defaultPath = Path.Combine(defaultCertbotPath, "live", defaultHostname);
-            var wwwPath = Path.Combine(defaultCertbotPath, "live", wwwHostname);
+            _fileProvider = new(Path.Combine(certbotCertificatesPath, "archive", defaultHostname));
+            _fileProviderWww = new(Path.Combine(certbotCertificatesPath, "archive", wwwHostname));
+            var defaultPath = Path.Combine(certbotCertificatesPath, "live", defaultHostname);
+            var wwwPath = Path.Combine(certbotCertificatesPath, "live", wwwHostname);
             TlsCertificateLoader = new(Path.Combine(defaultPath, "fullchain.pem"), Path.Combine(defaultPath, "privkey.pem"));
             TlsCertificateLoader.AddAdditionalCertificates(wwwHostname, Path.Combine(wwwPath, "fullchain.pem"), Path.Combine(wwwPath, "privkey.pem"));
             ChangeToken(_fileProvider, false);
