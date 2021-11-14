@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="NetworkPorts" Version="1.0.3" />
-    <PackageReference Include="TlsCertificateLoader" Version="1.1.1" />
+    <PackageReference Include="TlsCertificateLoader" Version="1.1.2" />
   </ItemGroup>
 
 </Project>
