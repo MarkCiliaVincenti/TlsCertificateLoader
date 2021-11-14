@@ -31,5 +31,3 @@ A [sample project using Certbot](https://github.com/MarkCiliaVincenti/TlsCertifi
 
 ## Credits
 [David Fowler](https://github.com/davidfowl) for [this idea](https://github.com/dotnet/aspnetcore/issues/21513#issuecomment-914370034).
-
-Logo made by [Freepik](https://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/).
