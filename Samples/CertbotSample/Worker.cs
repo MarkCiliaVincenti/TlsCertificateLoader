@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -19,14 +18,11 @@ namespace CertbotSample
 
         private readonly PhysicalFileProvider _fileProvider;
         private readonly PhysicalFileProvider _fileProviderWww;
-        private IChangeToken _fileChangeToken;
-        private IChangeToken _fileChangeTokenWww;
         public TlsCertificateLoader.TlsCertificateLoader TlsCertificateLoader { get; private set; }
 
         private void ChangeToken(PhysicalFileProvider physicalFileProvider, bool isWww)
         {
-            var fileChangeToken = (isWww) ? _fileChangeTokenWww : _fileChangeToken;
-            fileChangeToken = physicalFileProvider.Watch("privkey*.pem");
+            var fileChangeToken = physicalFileProvider.Watch("privkey*.pem");
             fileChangeToken.RegisterChangeCallback(CertificatesRefreshed, isWww);
         }
 
