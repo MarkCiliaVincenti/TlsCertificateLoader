@@ -1,7 +1,10 @@
 # TlsCertificateLoader
 Allows loading of TLS (HTTPS) certificates for .NET 6.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Fully compatible with certificates obtained by [Certbot](https://certbot.eff.org/) ([see sample project](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample)).
 
-To use:
+## Installation
+The recommended means is to use [NuGet](https://www.nuget.org/packages/TlsCertificateLoader), but you could also download the source code from [here](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/releases).
+
+## Usage
 ```csharp
 TlsCertificateLoader.TlsCertificateLoader tlsCertificateLoader = new(fullChainPemFilePath, privateKeyPemFilePath);
 options.ListenAnyIp(433, o =>
