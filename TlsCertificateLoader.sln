@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{954A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertbotSample", "Samples\CertbotSample\CertbotSample.csproj", "{0885444E-6C23-4BB4-A555-D815E9D40AAD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertbotSampleUsingMiddleware", "Samples\CertbotSampleUsingMiddleware\CertbotSampleUsingMiddleware.csproj", "{1FA62A7E-40AD-4888-8709-32424D92CB67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{0885444E-6C23-4BB4-A555-D815E9D40AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0885444E-6C23-4BB4-A555-D815E9D40AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0885444E-6C23-4BB4-A555-D815E9D40AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FA62A7E-40AD-4888-8709-32424D92CB67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FA62A7E-40AD-4888-8709-32424D92CB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FA62A7E-40AD-4888-8709-32424D92CB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FA62A7E-40AD-4888-8709-32424D92CB67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0885444E-6C23-4BB4-A555-D815E9D40AAD} = {954A5020-4B74-4BC0-B33D-5AC13CBC3500}
+		{1FA62A7E-40AD-4888-8709-32424D92CB67} = {954A5020-4B74-4BC0-B33D-5AC13CBC3500}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BAF7660-D2D0-4EC9-9766-1EABB27BB4C9}

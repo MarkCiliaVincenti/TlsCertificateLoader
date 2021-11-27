@@ -1,10 +1,10 @@
 # TlsCertificateLoader
-Allows loading of TLS (HTTPS) certificates for .NET 6.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Fully compatible with certificates obtained by [Certbot](https://certbot.eff.org/) ([see sample project](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample)).
+Allows loading of TLS (HTTPS) certificates for .NET 6.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Fully compatible with certificates obtained by [Certbot](https://certbot.eff.org/) ([see sample project without middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample) or [see sample project using middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSampleUsingMiddleware)).
 
 ## Installation
 The recommended means is to use [NuGet](https://www.nuget.org/packages/TlsCertificateLoader), but you could also download the source code from [here](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/releases).
 
-## Usage
+## Usage without middleware
 ```csharp
 TlsCertificateLoader.TlsCertificateLoader tlsCertificateLoader = new(fullChainPemFilePath, privateKeyPemFilePath);
 options.ListenAnyIp(433, o =>
@@ -31,6 +31,10 @@ tlsCertificateLoader.RefreshAdditionalCertificates("www.mydomain.tld");
 ```
 
 A [sample project using Certbot](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample) is available.
+
+## Usage with Certbot middleware
+
+Refer to the [sample project using Certbot using middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSampleUsingMiddleware).
 
 ## Credits
 [David Fowler](https://github.com/davidfowl) for [this idea](https://github.com/dotnet/aspnetcore/issues/21513#issuecomment-914370034).
