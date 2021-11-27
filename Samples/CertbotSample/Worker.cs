@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using TlsCertificateLoader.Exceptions;
 
 namespace CertbotSample
 {
@@ -33,12 +35,32 @@ namespace CertbotSample
             if (isWww)
             {
                 ChangeToken(_fileProviderWww, true);
-                TlsCertificateLoader.RefreshAdditionalCertificates(wwwHostname);
+                try
+                {
+                    TlsCertificateLoader.RefreshAdditionalCertificates(wwwHostname);
+                    Debug.WriteLine($"Additional certificates for {wwwHostname} refresh successful");
+                }
+                catch (AdditionalCertificatesNotInitializedException)
+                {
+                    Debug.WriteLine($"Additional certificates for {wwwHostname} refresh failed because initialization did not happen");
+                }
+                catch (AdditionalCertificatesNotFoundException ex)
+                {
+                    Debug.WriteLine($"Additional certificates for {ex.HostName} refresh failed because the certificate was not added");
+                }
             }
             else
             {
                 ChangeToken(_fileProvider, false);
-                TlsCertificateLoader.RefreshDefaultCertificates();
+                try
+                {
+                    TlsCertificateLoader.RefreshDefaultCertificates();
+                    Debug.WriteLine($"Default certificates refresh successful");
+                }
+                catch (DefaultCertificatesNotInitializedException)
+                {
+                    Debug.WriteLine($"Default certificates refresh failed because initialization did not happen");
+                }
             }
         }
 
