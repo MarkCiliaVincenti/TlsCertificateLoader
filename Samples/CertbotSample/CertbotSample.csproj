@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetworkPorts" Version="1.0.5" />
-    <PackageReference Include="TlsCertificateLoader" Version="2.0.1" />
+    <PackageReference Include="NetworkPorts" Version="1.0.6" />
+    <PackageReference Include="TlsCertificateLoader" Version="2.0.2" />
   </ItemGroup>
 
 </Project>

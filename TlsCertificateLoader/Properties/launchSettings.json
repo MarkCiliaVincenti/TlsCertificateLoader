@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "TlsCertificateLoader": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:1994;http://localhost:1995"
+    }
+  }
+}
