@@ -1,4 +1,6 @@
 # TlsCertificateLoader
+[![GitHub branch checks state](https://img.shields.io/github/checks-status/MarkCiliaVincenti/TlsCertificateLoader/master?label=build&logo=github&style=for-the-badge)](https://actions-badge.atrox.dev/MarkCiliaVincenti/TlsCertificateLoader/goto?ref=master) [![Nuget](https://img.shields.io/nuget/v/TlsCertificateLoader?label=TlsCertificateLoader&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/TlsCertificateLoader) [![Nuget](https://img.shields.io/nuget/dt/TlsCertificateLoader?logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/TlsCertificateLoader)
+
 Allows loading of TLS (HTTPS) certificates for .NET 6.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Fully compatible with certificates obtained by [Certbot](https://certbot.eff.org/) ([see sample project without middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample) or [see sample project using middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSampleUsingMiddleware)).
 
 ## Installation
