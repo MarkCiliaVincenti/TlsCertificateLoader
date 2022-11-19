@@ -8,7 +8,6 @@ using System.Runtime.Versioning;
 
 namespace CertbotSample
 {
-    [RequiresPreviewFeatures]
     public class Startup
     {
         public Startup()

@@ -15,7 +15,9 @@ namespace TlsCertificateLoader.Extensions
     /// <summary>
     /// Extension class for TlsCertificateLoader middleware for Certbot.
     /// </summary>
+#if NET6_0
     [RequiresPreviewFeatures]
+#endif
     public static class TlsCertificateLoaderMiddlewareExtensions
     {
         /// <summary>

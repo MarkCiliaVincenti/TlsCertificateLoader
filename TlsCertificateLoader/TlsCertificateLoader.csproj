@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 		<Authors>Mark Cilia Vincenti</Authors>
 		<RepositoryUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader.git</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader</PackageProjectUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<Version>2.0.8</Version>
+		<Version>2.1.1</Version>
 		<PackageIcon>logo.png</PackageIcon>
-		<PackageReleaseNotes>Package dependency update.</PackageReleaseNotes>
-		<Description>Allows loading of TLS (HTTPS) certificates for .NET 6.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Includes optional middleware for using certificates obtained by Certbot.</Description>
+		<PackageReleaseNotes>Support for .NET 7.0 without the need to enable preview features.</PackageReleaseNotes>
+		<Description>Allows loading of TLS (HTTPS) certificates for .NET 6.0/7.0 Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Includes optional middleware for using certificates obtained by Certbot.</Description>
 		<Copyright>© 2022 Mark Cilia Vincenti</Copyright>
-		<PackageTags>HTTPS,TLS,SSL,Kestrel,HTTP3,HTTP/3,certificates,security,net6,net6.0,Certbot,aspnetcore,middleware</PackageTags>
+		<PackageTags>HTTPS,TLS,SSL,Kestrel,HTTP3,HTTP/3,certificates,security,net6,net6.0,net7,net7.0Certbot,aspnetcore,middleware</PackageTags>
 		<RepositoryType>git</RepositoryType>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyVersion>2.0.8.0</AssemblyVersion>
-		<FileVersion>2.0.8.0</FileVersion>
+		<AssemblyVersion>2.1.1.0</AssemblyVersion>
+		<FileVersion>2.1.1.0</FileVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<IsPackable>true</IsPackable>
 		<IsTrimmable>true</IsTrimmable>
@@ -25,6 +25,10 @@
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
 		<AnalysisLevel>latest</AnalysisLevel>
+		<EnablePreviewFeatures>False</EnablePreviewFeatures>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<EnablePreviewFeatures>True</EnablePreviewFeatures>
 	</PropertyGroup>
 
