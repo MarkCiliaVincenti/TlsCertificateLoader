@@ -26,6 +26,8 @@
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<EnablePreviewFeatures>False</EnablePreviewFeatures>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>TlsCertificateLoader.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">

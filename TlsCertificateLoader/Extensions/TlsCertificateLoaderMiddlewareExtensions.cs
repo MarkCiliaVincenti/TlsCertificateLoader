@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using System;
-using System.Net;
+#if NET6_0
 using System.Runtime.Versioning;
+#endif
 using TlsCertificateLoader.Models;
 using TlsCertificateLoader.Workers;
 
