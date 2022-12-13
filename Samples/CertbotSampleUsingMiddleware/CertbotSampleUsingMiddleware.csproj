@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\TlsCertificateLoader\TlsCertificateLoader.csproj" />
+	  <PackageReference Include="TlsCertificateLoader" Version="2.2.0" />
 	</ItemGroup>
 
 </Project>
