@@ -105,6 +105,16 @@ namespace TlsCertificateLoader.Extensions
         /// Configures TlsCertificateLoader middleware for Certbot.
         /// </summary>
         /// <param name="app">The extended <see cref="IApplicationBuilder"/> instance.</param>
+        /// <returns>The <see cref="IApplicationBuilder"/>.</returns>
+        public static IApplicationBuilder UseTlsCertificateLoader(this IApplicationBuilder app)
+        {
+            return UseTlsCertificateLoader(app, o => { });
+        }
+
+        /// <summary>
+        /// Configures TlsCertificateLoader middleware for Certbot.
+        /// </summary>
+        /// <param name="app">The extended <see cref="IApplicationBuilder"/> instance.</param>
         /// <param name="configure">A callback to configure <see cref="TlsCertificateLoaderAppOptions"/>.</param>
         /// <returns>The <see cref="IApplicationBuilder"/>.</returns>
         public static IApplicationBuilder UseTlsCertificateLoader(this IApplicationBuilder app, Action<TlsCertificateLoaderAppOptions> configure)
