@@ -126,11 +126,25 @@ namespace TlsCertificateLoader.Extensions
 
             if (tlsCertificateLoaderAppOptions.UseDefaultFiles)
             {
-                app.UseDefaultFiles(tlsCertificateLoaderAppOptions.DefaultFilesOptions);
+                if (tlsCertificateLoaderAppOptions.DefaultFilesOptions == default)
+                {
+                    app.UseDefaultFiles();
+                }
+                else
+                {
+                    app.UseDefaultFiles(tlsCertificateLoaderAppOptions.DefaultFilesOptions);
+                }
             }
             if (tlsCertificateLoaderAppOptions.UseStaticFiles)
             {
-                app.UseStaticFiles(tlsCertificateLoaderAppOptions.StaticFileOptions);
+                if (tlsCertificateLoaderAppOptions.StaticFileOptions == default)
+                {
+                    app.UseStaticFiles();
+                }
+                else
+                {
+                    app.UseStaticFiles(tlsCertificateLoaderAppOptions.StaticFileOptions);
+                }
             }
 
             if (!tlsCertificateLoaderAppOptions.RedirectWwwSubdomainToDomain && !tlsCertificateLoaderAppOptions.RedirectHttpToHttps)
