@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Net.Http.Headers;
 using System;
 #if NET6_0
 using System.Runtime.Versioning;
@@ -42,12 +40,15 @@ namespace TlsCertificateLoader.Extensions
                     o.SetTlsHandshakeCallbackOptions(worker.TlsCertificateLoader);
                     o.SetHttpsConnectionAdapterOptions(worker.TlsCertificateLoader);
 
-                    o.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
+                    o.Protocols = tlsCertificateLoaderWebOptions.HttpProtocols;
                 });
-                k.Listen(tlsCertificateLoaderWebOptions.IPAddress, tlsCertificateLoaderWebOptions.HttpPort, o =>
+                if (tlsCertificateLoaderWebOptions.ListenOnUnencryptedHttp)
                 {
-                    o.Protocols = HttpProtocols.Http1;
-                });
+                    k.Listen(tlsCertificateLoaderWebOptions.IPAddress, tlsCertificateLoaderWebOptions.HttpPort, o =>
+                    {
+                        o.Protocols = HttpProtocols.Http1;
+                    });
+                }
             });
 
             return webBuilder;
@@ -104,49 +105,103 @@ namespace TlsCertificateLoader.Extensions
         /// Configures TlsCertificateLoader middleware for Certbot.
         /// </summary>
         /// <param name="app">The extended <see cref="IApplicationBuilder"/> instance.</param>
+        /// <param name="configure">A callback to configure <see cref="TlsCertificateLoaderAppOptions"/>.</param>
         /// <returns>The <see cref="IApplicationBuilder"/>.</returns>
-        public static IApplicationBuilder UseTlsCertificateLoader(this IApplicationBuilder app)
+        public static IApplicationBuilder UseTlsCertificateLoader(this IApplicationBuilder app, Action<TlsCertificateLoaderAppOptions> configure)
         {
+            TlsCertificateLoaderAppOptions tlsCertificateLoaderAppOptions = new();
+            configure(tlsCertificateLoaderAppOptions);
+
             app.UseHsts();
-            app.UseDefaultFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                ServeUnknownFileTypes = true,
-                OnPrepareResponse = context =>
-                {
-                    var headers = context.Context.Response.GetTypedHeaders();
 
-                    headers.CacheControl = new CacheControlHeaderValue
-                    {
-                        Public = true,
-                        MaxAge = TimeSpan.FromDays(30)
-                    };
-                }
-            });
-
-            app.Use(async (context, next) =>
+            if (tlsCertificateLoaderAppOptions.UseDefaultFiles)
             {
-                if (context.Request.IsHttps)
+                app.UseDefaultFiles(tlsCertificateLoaderAppOptions.DefaultFilesOptions);
+            }
+            if (tlsCertificateLoaderAppOptions.UseStaticFiles)
+            {
+                app.UseStaticFiles(tlsCertificateLoaderAppOptions.StaticFileOptions);
+            }
+
+            if (!tlsCertificateLoaderAppOptions.RedirectWwwSubdomainToDomain && !tlsCertificateLoaderAppOptions.RedirectHttpToHttps)
+            {
+                app.Use(async (context, next) =>
                 {
-                    if (context.Request.Host.Host.StartsWith("www."))
+                    var uri = context.Request.Path.Value ?? string.Empty;
+                    if (uri.StartsWith("/.well-known"))
                     {
-                        var uriWww = context.Request.Path.Value ?? string.Empty;
-                        var finalUri = $"https://{context.Request.Host.ToString()[4..]}{uriWww}";
-                        context.Response.Redirect(finalUri, permanent: true);
+                        await next();
                         return;
                     }
-                    await next();
-                    return;
-                }
-                var uri = context.Request.Path.Value ?? string.Empty;
-                if (uri.StartsWith("/.well-known"))
+                });
+            }
+            else if (!tlsCertificateLoaderAppOptions.RedirectWwwSubdomainToDomain && tlsCertificateLoaderAppOptions.RedirectHttpToHttps)
+            {
+                app.Use(async (context, next) =>
                 {
-                    await next();
-                    return;
-                }
-                var withHttps = $"https://{context.Request.Host}{uri}";
-                context.Response.Redirect(withHttps, permanent: true);
-            });
+                    var uri = context.Request.Path.Value ?? string.Empty;
+                    if (uri.StartsWith("/.well-known"))
+                    {
+                        await next();
+                        return;
+                    }
+                    if (!context.Request.IsHttps)
+                    {
+                        var withHttps = $"https://{context.Request.Host}{uri}";
+                        context.Response.Redirect(withHttps, permanent: true);
+                    }
+                });
+            }
+            else if (tlsCertificateLoaderAppOptions.RedirectWwwSubdomainToDomain && !tlsCertificateLoaderAppOptions.RedirectHttpToHttps)
+            {
+                app.Use(async (context, next) =>
+                {
+                    if (context.Request.IsHttps)
+                    {
+                        if (context.Request.Host.Host.StartsWith("www."))
+                        {
+                            var uriWww = context.Request.Path.Value ?? string.Empty;
+                            var finalUri = $"https://{context.Request.Host.ToString()[4..]}{uriWww}";
+                            context.Response.Redirect(finalUri, permanent: true);
+                            return;
+                        }
+                        await next();
+                        return;
+                    }
+                    var uri = context.Request.Path.Value ?? string.Empty;
+                    if (uri.StartsWith("/.well-known"))
+                    {
+                        await next();
+                        return;
+                    }
+                });
+            }
+            else
+            {
+                app.Use(async (context, next) =>
+                {
+                    if (context.Request.IsHttps)
+                    {
+                        if (context.Request.Host.Host.StartsWith("www."))
+                        {
+                            var uriWww = context.Request.Path.Value ?? string.Empty;
+                            var finalUri = $"https://{context.Request.Host.ToString()[4..]}{uriWww}";
+                            context.Response.Redirect(finalUri, permanent: true);
+                            return;
+                        }
+                        await next();
+                        return;
+                    }
+                    var uri = context.Request.Path.Value ?? string.Empty;
+                    if (uri.StartsWith("/.well-known"))
+                    {
+                        await next();
+                        return;
+                    }
+                    var withHttps = $"https://{context.Request.Host}{uri}";
+                    context.Response.Redirect(withHttps, permanent: true);
+                });
+            }
 
             return app;
         }

@@ -1,11 +1,16 @@
-﻿using NetworkPorts;
+﻿using Microsoft.AspNetCore.Server.Kestrel.Core;
+using NetworkPorts;
 using System.Net;
+using System.Runtime.Versioning;
 
 namespace TlsCertificateLoader.Models
 {
     /// <summary>
     /// TlsCertificateLoader middleware for Certbot web options
     /// </summary>
+#if NET6_0
+    [RequiresPreviewFeatures]
+#endif
     public class TlsCertificateLoaderWebOptions
     {
         /// <summary>
@@ -22,5 +27,15 @@ namespace TlsCertificateLoader.Models
         /// The HTTP port to listen on. Defaults to <see cref="NetworkPort.Http"/>.
         /// </summary>
         public int HttpPort { get; set; } = NetworkPort.Http;
+
+        /// <summary>
+        /// HTTP protocol versions. Defaults to <see cref="HttpProtocols.Http1AndHttp2AndHttp3"/>.
+        /// </summary>
+        public HttpProtocols HttpProtocols { get; set; } = HttpProtocols.Http1AndHttp2AndHttp3;
+
+        /// <summary>
+        /// Listen on the HTTP port. Defaults to true.
+        /// </summary>
+        public bool ListenOnUnencryptedHttp { get; set; } = true;
     }
 }
