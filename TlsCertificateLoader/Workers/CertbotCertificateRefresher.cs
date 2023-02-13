@@ -21,10 +21,10 @@ namespace TlsCertificateLoader.Workers
         private void ChangeToken(PhysicalFileProvider physicalFileProvider, bool isWww)
         {
             var fileChangeToken = physicalFileProvider.Watch("privkey*.pem");
-            fileChangeToken.RegisterChangeCallback(CertificatesRefreshed, isWww);
+            fileChangeToken.RegisterChangeCallback(async (state) => await CertificatesRefreshed(state).ConfigureAwait(false), isWww);
         }
 
-        private async void CertificatesRefreshed(object state)
+        private async Task CertificatesRefreshed(object state)
         {
             var isWww = Convert.ToBoolean(state);
             await Task.Delay(5000);

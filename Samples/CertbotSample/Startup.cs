@@ -4,16 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
 using System;
-using System.Runtime.Versioning;
 
 namespace CertbotSample
 {
     public class Startup
     {
-        public Startup()
-        {
-        }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHsts(options =>

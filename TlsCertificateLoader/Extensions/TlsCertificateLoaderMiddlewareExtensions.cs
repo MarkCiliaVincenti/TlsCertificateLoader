@@ -155,7 +155,6 @@ namespace TlsCertificateLoader.Extensions
                     if (uri.StartsWith("/.well-known"))
                     {
                         await next();
-                        return;
                     }
                 });
             }

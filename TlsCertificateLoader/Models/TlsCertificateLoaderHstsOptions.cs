@@ -19,7 +19,7 @@ namespace TlsCertificateLoader.Models
         /// <summary>
         /// <inheritdoc cref="HstsOptions.IncludeSubDomains"/>
         /// </summary>
-        public new bool IncludeSubDomains { get; set; } = false;
+        public new bool IncludeSubDomains { get; set; }
         /// <summary>
         /// <inheritdoc cref="HstsOptions.Preload"/> Defaults to <see langword="true"/>.
         /// </summary>
