@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace TlsCertificateLoader.Exceptions
+namespace TlsCertificateLoader.Exceptions;
+
+/// <summary>
+/// The exception that is thrown when additional certificates are not initialized.
+/// </summary>
+[Serializable]
+public sealed class AdditionalCertificatesNotInitializedException : InvalidOperationException
 {
-    /// <summary>
-    /// The exception that is thrown when additional certificates are not initialized.
-    /// </summary>
-    [Serializable]
-    public sealed class AdditionalCertificatesNotInitializedException : InvalidOperationException
-    {
-        internal AdditionalCertificatesNotInitializedException() : base("Additional certificates not initialized.")
-        { }
-    }
+    internal AdditionalCertificatesNotInitializedException() : base("Additional certificates not initialized.")
+    { }
 }

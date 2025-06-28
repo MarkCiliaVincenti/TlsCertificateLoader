@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace TlsCertificateLoader.Exceptions
+namespace TlsCertificateLoader.Exceptions;
+
+/// <summary>
+/// The exception that is thrown when the default certificates are not initialized.
+/// </summary>
+[Serializable]
+public sealed class DefaultCertificatesNotInitializedException : InvalidOperationException
 {
-    /// <summary>
-    /// The exception that is thrown when the default certificates are not initialized.
-    /// </summary>
-    [Serializable]
-    public sealed class DefaultCertificatesNotInitializedException : InvalidOperationException
-    {
-        internal DefaultCertificatesNotInitializedException() : base("Default certificates not initialized.")
-        { }
-    }
+    internal DefaultCertificatesNotInitializedException() : base("Default certificates not initialized.")
+    { }
 }

@@ -1,7 +1,6 @@
-﻿namespace TlsCertificateLoader
+﻿namespace TlsCertificateLoader;
+
+internal class Program
 {
-    internal class Program
-    {
-        internal static void Main() { }
-    }
+    internal static void Main() { }
 }
