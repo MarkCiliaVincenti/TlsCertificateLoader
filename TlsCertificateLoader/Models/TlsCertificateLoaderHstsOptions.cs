@@ -6,7 +6,7 @@ namespace TlsCertificateLoader.Models;
 /// <summary>
 /// TlsCertificateLoader middleware for Certbot HSTS options
 /// </summary>
-public class TlsCertificateLoaderHstsOptions : HstsOptions
+public sealed class TlsCertificateLoaderHstsOptions : HstsOptions
 {
     /// <summary>
     /// Enable or disable HSTS (Strict-Transport-Security header). Defaults to <see langword="true"/>.

@@ -13,7 +13,7 @@ namespace TlsCertificateLoader.Models;
 #if NET6_0
 [RequiresPreviewFeatures]
 #endif
-public class TlsCertificateLoaderWebOptions
+public sealed class TlsCertificateLoaderWebOptions
 {
     /// <summary>
     /// The <see cref="System.Net.IPAddress"/> to listen on. Defaults to <see cref="IPAddress.Any"/>.

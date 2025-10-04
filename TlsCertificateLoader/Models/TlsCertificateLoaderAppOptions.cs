@@ -8,7 +8,7 @@ namespace TlsCertificateLoader.Models;
 /// <summary>
 /// TlsCertificateLoader middleware for Certbot app options
 /// </summary>
-public class TlsCertificateLoaderAppOptions
+public sealed class TlsCertificateLoaderAppOptions
 {
     /// <summary>
     /// <inheritdoc cref="DefaultFilesExtensions.UseDefaultFiles(IApplicationBuilder, DefaultFilesOptions)"/>

@@ -5,7 +5,7 @@ using TlsCertificateLoader.Extensions;
 
 namespace TlsCertificateLoader.Models;
 
-internal class CertificateHolder
+internal sealed class CertificateHolder
 {
     internal X509Certificate2Collection X509Certificate2Collection { get; private set; }
     internal X509Certificate2 X509Certificate2 { get; private set; }
