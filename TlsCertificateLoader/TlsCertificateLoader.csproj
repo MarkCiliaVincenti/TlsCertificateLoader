@@ -7,21 +7,21 @@
 		<PackageProjectUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader</PackageProjectUrl>
 		<Copyright>MIT</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>2.3.3</Version>
+		<Version>2.5.0</Version>
 		<PackageIcon>logo.png</PackageIcon>
-		<PackageReleaseNotes>Minor optimizations.</PackageReleaseNotes>
-		<Description>Allows loading of TLS (HTTPS) certificates for .NET 6.0+ Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Includes optional middleware for using certificates obtained by Certbot.</Description>
+		<PackageReleaseNotes>New API for loading multiple certificates and allowing ingestion of password-protected private key PEM files.</PackageReleaseNotes>
+		<Description>A .NET library for loading of TLS/SSL (HTTPS) certificates for .NET 6.0+ Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Includes optional middleware for using certificates obtained by Certbot.</Description>
 		<Copyright>© 2025 Mark Cilia Vincenti</Copyright>
 		<PackageTags>HTTPS,TLS,SSL,Kestrel,HTTP3,HTTP/3,certificates,security,net6,net6.0,net7,net7.0,net8,net8.0,net9,net9.0,Certbot,aspnetcore,middleware</PackageTags>
 		<RepositoryType>git</RepositoryType>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyVersion>2.3.3.0</AssemblyVersion>
-		<FileVersion>2.3.3.0</FileVersion>
+		<AssemblyVersion>2.5.0</AssemblyVersion>
+		<FileVersion>2.5.0</FileVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<IsPackable>true</IsPackable>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
-		<AnalysisLevel>preview</AnalysisLevel>
+		<AnalysisLevel>latest</AnalysisLevel>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>TlsCertificateLoader.snk</AssemblyOriginatorKeyFile>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>

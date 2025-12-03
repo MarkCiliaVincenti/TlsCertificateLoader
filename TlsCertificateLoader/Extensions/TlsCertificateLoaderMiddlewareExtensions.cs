@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+
 #if NET6_0
 using System.Runtime.Versioning;
 #endif
@@ -21,49 +23,50 @@ public static class TlsCertificateLoaderMiddlewareExtensions
 {
     private const string WELL_KNOWN = "/.well-known";
 
-    /// <summary>
-    /// Use TlsCertificateLoader middleware for Certbot.
-    /// </summary>
-    /// <param name="webBuilder">The extended <see cref="IWebHostBuilder"/> instance.</param>
-    /// <param name="configure">A callback to configure <see cref="TlsCertificateLoaderWebOptions"/>.</param>
-    /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
-    public static IWebHostBuilder UseTlsCertificateLoader(this IWebHostBuilder webBuilder, Action<TlsCertificateLoaderWebOptions> configure)
+    extension(IWebHostBuilder webBuilder)
     {
-        TlsCertificateLoaderWebOptions tlsCertificateLoaderWebOptions = new();
-        configure(tlsCertificateLoaderWebOptions);
-
-        webBuilder.UseKestrel(k =>
+        /// <summary>
+        /// Use TlsCertificateLoader middleware for Certbot.
+        /// </summary>
+        /// <param name="configure">A callback to configure <see cref="TlsCertificateLoaderWebOptions"/>.</param>
+        /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
+        public IWebHostBuilder UseTlsCertificateLoader(Action<TlsCertificateLoaderWebOptions> configure)
         {
-            var appServices = k.ApplicationServices;
-            var worker = appServices.GetService<ICertbotCertificateRefresher>();
+            TlsCertificateLoaderWebOptions tlsCertificateLoaderWebOptions = new();
+            configure(tlsCertificateLoaderWebOptions);
 
-            k.Listen(tlsCertificateLoaderWebOptions.IPAddress, tlsCertificateLoaderWebOptions.HttpsPort, o =>
+            webBuilder.UseKestrel(k =>
             {
-                o.SetTlsHandshakeCallbackOptions(worker.TlsCertificateLoader);
-                o.SetHttpsConnectionAdapterOptions(worker.TlsCertificateLoader);
+                var appServices = k.ApplicationServices;
+                var worker = appServices.GetService<ICertbotCertificateRefresher>();
 
-                o.Protocols = tlsCertificateLoaderWebOptions.HttpProtocols;
-            });
-            if (tlsCertificateLoaderWebOptions.ListenOnUnencryptedHttp)
-            {
-                k.Listen(tlsCertificateLoaderWebOptions.IPAddress, tlsCertificateLoaderWebOptions.HttpPort, o =>
+                k.Listen(tlsCertificateLoaderWebOptions.IPAddress, tlsCertificateLoaderWebOptions.HttpsPort, o =>
                 {
-                    o.Protocols = HttpProtocols.Http1;
+                    o.SetTlsHandshakeCallbackOptions(worker.TlsCertificateLoader);
+                    o.SetHttpsConnectionAdapterOptions(worker.TlsCertificateLoader);
+
+                    o.Protocols = tlsCertificateLoaderWebOptions.HttpProtocols;
                 });
-            }
-        });
+                if (tlsCertificateLoaderWebOptions.ListenOnUnencryptedHttp)
+                {
+                    k.Listen(tlsCertificateLoaderWebOptions.IPAddress, tlsCertificateLoaderWebOptions.HttpPort, o =>
+                    {
+                        o.Protocols = HttpProtocols.Http1;
+                    });
+                }
+            });
 
-        return webBuilder;
-    }
+            return webBuilder;
+        }
 
-    /// <summary>
-    /// Use TlsCertificateLoader middleware for Certbot with default options.
-    /// </summary>
-    /// <param name="webBuilder">The extended <see cref="IWebHostBuilder"/> instance.</param>
-    /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
-    public static IWebHostBuilder UseTlsCertificateLoader(this IWebHostBuilder webBuilder)
-    {
-        return UseTlsCertificateLoader(webBuilder, o => { });
+        /// <summary>
+        /// Use TlsCertificateLoader middleware for Certbot with default options.
+        /// </summary>
+        /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
+        public IWebHostBuilder UseTlsCertificateLoader()
+        {
+            return UseTlsCertificateLoader(webBuilder, o => { });
+        }
     }
 
     /// <summary>
@@ -88,6 +91,41 @@ public static class TlsCertificateLoaderMiddlewareExtensions
         services.AddSingleton<ICertbotCertificateRefresher>(new CertbotCertificateRefresher(defaultHostname, wwwHostname, certbotCertificatesPath));
 
         return services;
+    }
+
+    /// <summary>
+    /// Adds TlsCertificateLoader middleware for Certbot.
+    /// </summary>
+    /// <param name="services">The extended <see cref="IServiceCollection"/> instance.</param>
+    /// <param name="configure">A callback to configure <see cref="TlsCertificateLoaderHstsOptions"/>.</param>
+    /// <param name="defaultCertificate">The default certificate to set up.</param>
+    /// <param name="additionalCertificates">Optional additional certificates to set up.</param>
+    /// <returns>The <see cref="IServiceCollection"/>.</returns>
+    public static IServiceCollection AddTlsCertificateLoader(this IServiceCollection services, Action<TlsCertificateLoaderHstsOptions> configure, Certificate defaultCertificate, IEnumerable<Certificate> additionalCertificates = null)
+    {
+        TlsCertificateLoaderHstsOptions tlsCertificateLoaderHstsOptions = new();
+        configure(tlsCertificateLoaderHstsOptions);
+
+        if (tlsCertificateLoaderHstsOptions.HstsEnabled)
+        {
+            services.AddHsts(o => o = tlsCertificateLoaderHstsOptions);
+        }
+
+        services.AddSingleton<ICertbotCertificateRefresher>(new CertbotCertificateRefresher(defaultCertificate, additionalCertificates));
+
+        return services;
+    }
+
+    /// <summary>
+    /// Adds TlsCertificateLoader middleware for Certbot.
+    /// </summary>
+    /// <param name="services">The extended <see cref="IServiceCollection"/> instance.</param>
+    /// <param name="defaultCertificate">The default certificate to set up.</param>
+    /// <param name="additionalCertificates">Optional additional certificates to set up.</param>
+    /// <returns>The <see cref="IServiceCollection"/>.</returns>
+    public static IServiceCollection AddTlsCertificateLoader(this IServiceCollection services, Certificate defaultCertificate, IEnumerable<Certificate> additionalCertificates = null)
+    {
+        return AddTlsCertificateLoader(services, o => { }, defaultCertificate, additionalCertificates);
     }
 
     /// <summary>

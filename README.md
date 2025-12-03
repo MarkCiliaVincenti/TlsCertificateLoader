@@ -1,7 +1,7 @@
-# ![TlsCertificateLoader](https://raw.githubusercontent.com/MarkCiliaVincenti/TlsCertificateLoader/master/logo32.png) TlsCertificateLoader
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/MarkCiliaVincenti/TlsCertificateLoader/dotnet.yml?branch=master&logo=github&style=for-the-badge)](https://actions-badge.atrox.dev/MarkCiliaVincenti/TlsCertificateLoader/goto?ref=master) [![Nuget](https://img.shields.io/nuget/v/TlsCertificateLoader?label=TlsCertificateLoader&logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/TlsCertificateLoader) [![Nuget](https://img.shields.io/nuget/dt/TlsCertificateLoader?logo=nuget&style=for-the-badge)](https://www.nuget.org/packages/TlsCertificateLoader)
+# ![TlsCertificateLoader](https://raw.githubusercontent.com/MarkCiliaVincenti/TlsCertificateLoader/master/logo32.png)&nbsp;TlsCertificateLoader
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/MarkCiliaVincenti/TlsCertificateLoader/dotnet.yml?branch=master&logo=github&style=flat)](https://actions-badge.atrox.dev/MarkCiliaVincenti/TlsCertificateLoader/goto?ref=master) [![NuGet](https://img.shields.io/nuget/v/TlsCertificateLoader?label=NuGet&logo=nuget&style=flat)](https://www.nuget.org/packages/TlsCertificateLoader) [![NuGet](https://img.shields.io/nuget/dt/TlsCertificateLoader?logo=nuget&style=flat)](https://www.nuget.org/packages/TlsCertificateLoader)
 
-Allows loading of TLS (HTTPS) certificates for .NET 6.0+ Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Fully compatible with certificates obtained by [Certbot](https://certbot.eff.org/) ([see sample project without middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample) or [see sample project using middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSampleUsingMiddleware)).
+A .NET library for loading of TLS/SSL (HTTPS) certificates for .NET 6.0+ Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Fully compatible with certificates obtained by [Certbot](https://certbot.eff.org/) ([see sample project without middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample) or [see sample project using middleware](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSampleUsingMiddleware)).
 
 ## Installation
 The recommended means is to use [NuGet](https://www.nuget.org/packages/TlsCertificateLoader), but you could also download the source code from [here](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/releases).
@@ -30,6 +30,22 @@ tlsCertificateLoader.AddAdditionalCertificates("www.mydomain.tld", fullChainWwwP
 And to refresh additional certificate collections (eg either on a Timer or watching a directory via PhysicalFileProvider):
 ```csharp
 tlsCertificateLoader.RefreshAdditionalCertificates("www.mydomain.tld");
+```
+
+There are overloaded methdods as well that allow you to specify a password for the private key.
+```csharp
+tlsCertificateLoader.AddAdditionalCertificates("www.mydomain.tld", fullChainWwwPemFilePath, privateKeyWwwPemFilePath, privateKeyPassword);
+```
+
+If you want to add more than just one additional certificate you can use a different overload as well.
+```csharp
+services.AddTlsCertificateLoader(
+     new Certificate("mydomain.tld", "/etc/letsencrypt"),
+     [
+          new Certificate("mydomain.tld", "/etc/letsencrypt"),
+          new Certificate("db.mydomain.tld", "/etc/letsencrypt"),
+          new Certificate("server.mydomain.tld", "/etc/letsencrypt")
+     ]);
 ```
 
 A [sample project using Certbot](https://github.com/MarkCiliaVincenti/TlsCertificateLoader/tree/master/Samples/CertbotSample) is available.
