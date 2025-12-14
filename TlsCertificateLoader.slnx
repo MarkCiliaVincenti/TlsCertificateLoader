@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Samples/">
+    <Project Path="Samples/CertbotSample/CertbotSample.csproj" />
+    <Project Path="Samples/CertbotSampleUsingMiddleware/CertbotSampleUsingMiddleware.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Project Path="TlsCertificateLoader/TlsCertificateLoader.csproj" />
+</Solution>
