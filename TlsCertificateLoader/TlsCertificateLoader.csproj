@@ -7,16 +7,16 @@
 		<PackageProjectUrl>https://github.com/MarkCiliaVincenti/TlsCertificateLoader</PackageProjectUrl>
 		<Copyright>MIT</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>2.5.2</Version>
+		<Version>2.5.3</Version>
 		<PackageIcon>logo.png</PackageIcon>
-		<PackageReleaseNotes>Optimizations, cleaning and enforcing consistent SDK version for total reproducible builds.</PackageReleaseNotes>
+		<PackageReleaseNotes>Dependency update.</PackageReleaseNotes>
 		<Description>A .NET library for loading of TLS/SSL (HTTPS) certificates for .NET 6.0+ Kestrel web applications, allowing for refreshing of certificates as well as compatibility with HTTP/3. Includes optional middleware for using certificates obtained by Certbot.</Description>
 		<Copyright>© 2026 Mark Cilia Vincenti</Copyright>
 		<PackageTags>HTTPS,TLS,SSL,Kestrel,HTTP3,HTTP/3,certificates,security,net6,net6.0,net7,net7.0,net8,net8.0,net9,net9.0,net10,net10.0,Certbot,aspnetcore,middleware</PackageTags>
 		<RepositoryType>git</RepositoryType>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyVersion>2.5.2</AssemblyVersion>
-		<FileVersion>2.5.2</FileVersion>
+		<AssemblyVersion>2.5.3.0</AssemblyVersion>
+		<FileVersion>2.5.3.0</FileVersion>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<IsPackable>true</IsPackable>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -45,7 +45,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DotNet.ReproducibleBuilds" Version="2.0.2" PrivateAssets="All" />
-		<PackageReference Include="NetworkPorts" Version="1.1.5" />
+		<PackageReference Include="NetworkPorts" Version="1.1.6" />
 	</ItemGroup>
 
 	<ItemGroup>
