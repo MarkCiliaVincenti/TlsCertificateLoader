@@ -14,7 +14,7 @@ var host = Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =
     webBuilder.UseKestrel(k =>
     {
         var appServices = k.ApplicationServices;
-        var worker = appServices.GetService<IWorker>();
+        var worker = appServices.GetService<IWorker>()!;
 
         k.Listen(new IPAddress(0), NetworkPort.Https, o =>
         {

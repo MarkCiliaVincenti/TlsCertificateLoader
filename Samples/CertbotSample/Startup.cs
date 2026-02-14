@@ -21,7 +21,7 @@ public class Startup
         services.AddSingleton<IWorker, Worker>();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app)
     {
         app.UseHsts();
         app.UseDefaultFiles();
@@ -44,7 +44,7 @@ public class Startup
           {
               if (context.Request.IsHttps)
               {
-                  if (context.Request.Host.Host.StartsWith("www."))
+                  if (context.Request.Host.Host.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
                   {
                       var uriWww = context.Request.Path.Value ?? string.Empty;
                       var finalUri = $"https://{context.Request.Host.ToString()[4..]}{uriWww}";
@@ -55,7 +55,7 @@ public class Startup
                   return;
               }
               var uri = context.Request.Path.Value ?? string.Empty;
-              if (uri.StartsWith("/.well-known"))
+              if (uri.StartsWith("/.well-known", StringComparison.OrdinalIgnoreCase))
               {
                   await next();
                   return;

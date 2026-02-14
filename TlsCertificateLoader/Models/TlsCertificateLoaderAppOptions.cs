@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using System;
@@ -18,7 +18,7 @@ public sealed class TlsCertificateLoaderAppOptions
     /// <summary>
     /// <inheritdoc cref="Microsoft.AspNetCore.Builder.DefaultFilesOptions" />
     /// </summary>
-    public DefaultFilesOptions DefaultFilesOptions { get; set; }
+    public DefaultFilesOptions? DefaultFilesOptions { get; set; }
 
     /// <summary>
     /// <inheritdoc cref="StaticFileExtensions.UseStaticFiles(IApplicationBuilder, StaticFileOptions)"/>
@@ -28,7 +28,7 @@ public sealed class TlsCertificateLoaderAppOptions
     /// <summary>
     /// <inheritdoc cref="Microsoft.AspNetCore.Builder.StaticFileOptions" />
     /// </summary>
-    public StaticFileOptions StaticFileOptions { get; set; } = new StaticFileOptions
+    public StaticFileOptions? StaticFileOptions { get; set; } = new StaticFileOptions
     {
         ServeUnknownFileTypes = true,
         OnPrepareResponse = context =>

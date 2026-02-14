@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
 	  <LangVersion>latest</LangVersion>
+      <Nullable>enable</Nullable>
 	  <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
 	  <CheckNotRecommendedTargetFramework>false</CheckNotRecommendedTargetFramework>
 	  <CheckEolTargetFramework>false</CheckEolTargetFramework>

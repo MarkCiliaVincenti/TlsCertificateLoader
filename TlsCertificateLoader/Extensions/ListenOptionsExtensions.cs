@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
 using System.Net.Security;
@@ -10,34 +10,35 @@ namespace TlsCertificateLoader.Extensions;
 /// </summary>
 public static class ListenOptionsExtensions
 {
-    /// <summary>
-    /// Sets the TlsHandshakeCallbackOptions using a <see cref="SslStreamCertificateContext"/> provided by <see cref="TlsCertificateLoader"/>.
-    /// </summary>
-    /// <param name="listenOptions">The extended <see cref="ListenOptions"/> instance.</param>
-    /// <param name="tlsCertificateLoader">The instance of <see cref="TlsCertificateLoader"/> to use.</param>
-    /// <returns>The <see cref="ListenOptions"/>.</returns>
-    public static ListenOptions SetTlsHandshakeCallbackOptions(this ListenOptions listenOptions, TlsCertificateLoader tlsCertificateLoader)
+    extension(ListenOptions listenOptions)
     {
-        return listenOptions.UseHttps(new TlsHandshakeCallbackOptions
+        /// <summary>
+        /// Sets the TlsHandshakeCallbackOptions using a <see cref="SslStreamCertificateContext"/> provided by <see cref="TlsCertificateLoader"/>.
+        /// </summary>
+        /// <param name="tlsCertificateLoader">The instance of <see cref="TlsCertificateLoader"/> to use.</param>
+        /// <returns>The <see cref="ListenOptions"/>.</returns>
+        public ListenOptions SetTlsHandshakeCallbackOptions(TlsCertificateLoader tlsCertificateLoader)
         {
-            OnConnection = context => new(new SslServerAuthenticationOptions
+            return listenOptions.UseHttps(new TlsHandshakeCallbackOptions
             {
-                ServerCertificateContext = tlsCertificateLoader.GetCertificateHolder(context.ClientHelloInfo.ServerName).SslStreamCertificateContext
-            })
-        });
-    }
+                OnConnection = context => new(new SslServerAuthenticationOptions
+                {
+                    ServerCertificateContext = tlsCertificateLoader.GetCertificateHolder(context.ClientHelloInfo.ServerName).SslStreamCertificateContext
+                })
+            });
+        }
 
-    /// <summary>
-    /// Sets the HttpsConnectionAdapterOptions using a <see cref="System.Security.Cryptography.X509Certificates.X509Certificate2"/> provided by <see cref="TlsCertificateLoader"/>.
-    /// </summary>
-    /// <param name="listenOptions">The extended <see cref="ListenOptions"/> instance.</param>
-    /// <param name="tlsCertificateLoader">The instance of <see cref="TlsCertificateLoader"/> to use.</param>
-    /// <returns>The <see cref="ListenOptions"/>.</returns>
-    public static ListenOptions SetHttpsConnectionAdapterOptions(this ListenOptions listenOptions, TlsCertificateLoader tlsCertificateLoader)
-    {
-        return listenOptions.UseHttps(new HttpsConnectionAdapterOptions
+        /// <summary>
+        /// Sets the HttpsConnectionAdapterOptions using a <see cref="System.Security.Cryptography.X509Certificates.X509Certificate2"/> provided by <see cref="TlsCertificateLoader"/>.
+        /// </summary>
+        /// <param name="tlsCertificateLoader">The instance of <see cref="TlsCertificateLoader"/> to use.</param>
+        /// <returns>The <see cref="ListenOptions"/>.</returns>
+        public ListenOptions SetHttpsConnectionAdapterOptions(TlsCertificateLoader tlsCertificateLoader)
         {
-            ServerCertificateSelector = (_, hostname) => tlsCertificateLoader.GetCertificateHolder(hostname).X509Certificate2
-        });
+            return listenOptions.UseHttps(new HttpsConnectionAdapterOptions
+            {
+                ServerCertificateSelector = (_, hostname) => tlsCertificateLoader.GetCertificateHolder(hostname!).X509Certificate2
+            });
+        }
     }
 }

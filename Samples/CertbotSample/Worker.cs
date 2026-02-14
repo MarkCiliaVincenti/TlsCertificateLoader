@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -12,37 +12,39 @@ public interface IWorker
     public TlsCertificateLoader.TlsCertificateLoader TlsCertificateLoader { get; }
 }
 
-public class Worker : IWorker
+public class Worker : IWorker, IDisposable
 {
-    private const string defaultHostname = "mydomain.tld";
-    private const string wwwHostname = "www.mydomain.tld";
-    private const string certbotCertificatesPath = "/etc/letsencrypt";
+    private const string DefaultHostname = "mydomain.tld";
+    private const string WwwHostname = "www.mydomain.tld";
+    private const string CertbotCertificatesPath = "/etc/letsencrypt";
 
     private readonly PhysicalFileProvider _fileProvider;
     private readonly PhysicalFileProvider _fileProviderWww;
+    private bool _disposedValue;
+
     public TlsCertificateLoader.TlsCertificateLoader TlsCertificateLoader { get; private set; }
 
     private void ChangeToken(PhysicalFileProvider physicalFileProvider, bool isWww)
     {
         var fileChangeToken = physicalFileProvider.Watch("privkey*.pem");
-        fileChangeToken.RegisterChangeCallback(async (state) => await CertificatesRefreshed(state).ConfigureAwait(false), isWww);
+        fileChangeToken.RegisterChangeCallback(async (state) => await CertificatesRefreshed(state!).ConfigureAwait(false), isWww);
     }
 
     private async Task CertificatesRefreshed(object state)
     {
-        var isWww = Convert.ToBoolean(state);
+        var isWww = state is bool flag && flag;
         await Task.Delay(5000);
         if (isWww)
         {
             ChangeToken(_fileProviderWww, true);
             try
             {
-                TlsCertificateLoader.RefreshAdditionalCertificates(wwwHostname);
-                Debug.WriteLine($"Additional certificates for {wwwHostname} refresh successful");
+                TlsCertificateLoader.RefreshAdditionalCertificates(WwwHostname);
+                Debug.WriteLine($"Additional certificates for {WwwHostname} refresh successful");
             }
             catch (AdditionalCertificatesNotInitializedException)
             {
-                Debug.WriteLine($"Additional certificates for {wwwHostname} refresh failed because initialization did not happen");
+                Debug.WriteLine($"Additional certificates for {WwwHostname} refresh failed because initialization did not happen");
             }
             catch (AdditionalCertificatesNotFoundException ex)
             {
@@ -66,13 +68,33 @@ public class Worker : IWorker
 
     public Worker()
     {
-        _fileProvider = new(Path.Combine(certbotCertificatesPath, "archive", defaultHostname));
-        _fileProviderWww = new(Path.Combine(certbotCertificatesPath, "archive", wwwHostname));
-        var defaultPath = Path.Combine(certbotCertificatesPath, "live", defaultHostname);
-        var wwwPath = Path.Combine(certbotCertificatesPath, "live", wwwHostname);
+        _fileProvider = new(Path.Combine(CertbotCertificatesPath, "archive", DefaultHostname));
+        _fileProviderWww = new(Path.Combine(CertbotCertificatesPath, "archive", WwwHostname));
+        var defaultPath = Path.Combine(CertbotCertificatesPath, "live", DefaultHostname);
+        var wwwPath = Path.Combine(CertbotCertificatesPath, "live", WwwHostname);
         TlsCertificateLoader = new(Path.Combine(defaultPath, "fullchain.pem"), Path.Combine(defaultPath, "privkey.pem"));
-        TlsCertificateLoader.AddAdditionalCertificates(wwwHostname, Path.Combine(wwwPath, "fullchain.pem"), Path.Combine(wwwPath, "privkey.pem"));
+        TlsCertificateLoader.AddAdditionalCertificates(WwwHostname, Path.Combine(wwwPath, "fullchain.pem"), Path.Combine(wwwPath, "privkey.pem"));
         ChangeToken(_fileProvider, false);
         ChangeToken(_fileProviderWww, true);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing)
+            {
+                _fileProvider.Dispose();
+                _fileProviderWww.Dispose();
+            }
+
+            _disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

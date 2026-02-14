@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography.X509Certificates;
 
 namespace TlsCertificateLoader.Extensions;
@@ -22,18 +23,29 @@ public static class X509Certificate2CollectionExtensions
         /// <param name="password">The optional password used to decrypt the private key.</param>
         /// <returns>The <see cref="X509Certificate2Collection"/>.</returns>
         [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Extension method")]
+        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The created X509Certificate2 is added to and returned in the provided X509Certificate2Collection; ownership is transferred to the caller.")]
         public X509Certificate2Collection ImportFullChainFromPemFiles(
             string fullChainPemFilePath,
             string privateKeyPemFilePath,
-            string password = null)
+            string? password = null)
         {
+            ArgumentNullException.ThrowIfNull(x509Certificate2Collection);
+
             var leaf = (password == null)
                 ? X509Certificate2.CreateFromPemFile(fullChainPemFilePath, privateKeyPemFilePath)
                 : X509Certificate2.CreateFromEncryptedPemFile(fullChainPemFilePath, password, privateKeyPemFilePath);
 
-            var chain = new X509Certificate2Collection(leaf);
-            chain.ImportFromPemFile(fullChainPemFilePath);
-            return chain;
+            try
+            {
+                x509Certificate2Collection.Add(leaf);
+                x509Certificate2Collection.ImportFromPemFile(fullChainPemFilePath);
+                return x509Certificate2Collection;
+            }
+            catch
+            {
+                leaf.Dispose();
+                throw;
+            }
         }
     }
 }

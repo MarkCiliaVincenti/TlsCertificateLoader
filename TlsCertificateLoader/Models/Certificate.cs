@@ -1,11 +1,12 @@
-﻿using System.IO;
+using System;
+using System.IO;
 
 namespace TlsCertificateLoader.Models;
 
 /// <summary>
 /// TlsCertificateLoader certificate model
 /// </summary>
-public struct Certificate
+public struct Certificate : IEquatable<Certificate>
 {
     /// <summary>
     /// Certificate constructor for Certbot file structure
@@ -65,5 +66,48 @@ public struct Certificate
     /// <summary>
     /// Optional password used to decrypt the private key
     /// </summary>
-    public string Password { get; set; } = null;
+    public string? Password { get; set; } = null;
+
+    readonly bool IEquatable<Certificate>.Equals(Certificate other)
+        => string.Equals(Hostname, other.Hostname, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(FullChainPemFilePath, other.FullChainPemFilePath, StringComparison.Ordinal)
+            && string.Equals(PrivateKeyPemFilePath, other.PrivateKeyPemFilePath, StringComparison.Ordinal)
+            && string.Equals(Password, other.Password, StringComparison.Ordinal);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="obj"><inheritdoc/></param>
+    /// <returns><inheritdoc/></returns>
+    public override readonly bool Equals(object? obj)
+        => obj is Certificate certificate && ((IEquatable<Certificate>)this).Equals(certificate);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="left"><inheritdoc/></param>
+    /// <param name="right"><inheritdoc/></param>
+    /// <returns><inheritdoc/></returns>
+    public static bool operator ==(Certificate left, Certificate right)
+        => left.Equals(right);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="left"><inheritdoc/></param>
+    /// <param name="right"><inheritdoc/></param>
+    /// <returns><inheritdoc/></returns>
+    public static bool operator !=(Certificate left, Certificate right)
+        => !(left.Equals(right));
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <returns><inheritdoc/></returns>
+    public override readonly int GetHashCode()
+        => HashCode.Combine(
+            Hostname?.ToLowerInvariant(),
+            FullChainPemFilePath,
+            PrivateKeyPemFilePath,
+            Password);
 }

@@ -4,7 +4,12 @@
     <Project Path="Samples/CertbotSampleUsingMiddleware/CertbotSampleUsingMiddleware.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".github/workflows/dotnet.yml" />
     <File Path="Directory.Build.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="stylecop.json" />
   </Folder>
   <Project Path="TlsCertificateLoader/TlsCertificateLoader.csproj" />
 </Solution>
